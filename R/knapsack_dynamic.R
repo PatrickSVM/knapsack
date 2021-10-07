@@ -40,18 +40,4 @@ knapsack_dynamic <- function(x, W) {
 
 
 
-knapsack_dynamic(x = knapsack_objects[1:8,], W = 2000)
-
-end <- result[, 3100:3501]
-
-
-result[3 + 1, 5] > result[4, 6]
-
-
-
-
-knapsack_objects$w[]
-
-i
-
 
