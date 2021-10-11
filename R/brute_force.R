@@ -1,6 +1,19 @@
+#' brute_force_knapsack
+#'
+#' Solver for the knapsack problem based on the brute force algorithm.
+#'
+#' @param x Dataframe containing weight and value of objects
+#' @param W maximum weight allowed in knapsack
+#'
+#' @return List with the optimal value and the respective elements,
+#' that are included in the solution.
+#'
+#' @examples
+#' knapsack_objects <- get_knapsack_objects(2000)
+#'
+#' brute_force_knapsack(x = knapsack_objects[1:8, ], W = 3500)
+#'
 #' @export
-#'
-#'
 
 brute_force_knapsack <- function(x, W) {
 

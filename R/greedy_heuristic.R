@@ -1,12 +1,24 @@
+#' greedy_heuristic
 #'
+#' Solver for the knapsack problem based on the greedy heuristic.
+#'
+#' @param x Dataframe containing weight and value of objects
+#' @param W maximum weight allowed in knapsack
+#'
+#' @return List with the optimal value and the respective elements,
+#' that are included in the solution.
+#'
+#' @examples
+#' knapsack_objects <- get_knapsack_objects(2000)
+#'
+#' greedy_knapsack(x = knapsack_objects[1:800,], W = 3500)
 #' @import dplyr
 #'
 #' @export
-#'
 
 greedy_knapsack <- function(x, W) {
 
-  ordered_df <- x %>% mutate(ratio = v/w)
+  ordered_df <- x %>% mutate(ratio = .data$v/.data$w)
   ordered_df <- ordered_df[order(ordered_df$ratio, decreasing = TRUE), ]
   current_weight <- 0
   result_val <- 0

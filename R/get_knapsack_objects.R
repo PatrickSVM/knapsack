@@ -1,3 +1,15 @@
+#' get_knapsack_objects
+#'
+#' Get a dataframe to use for the knapsack problem.
+#' It contains two columns: w = weights, v = values
+#'
+#' @param n number of items that should be created
+#'
+#' @return Dataframe with items' weights and values
+#'
+#' @examples
+#' get_knapsack_objects(2000)
+#'
 #' @export
 
 get_knapsack_objects <- function(n) {

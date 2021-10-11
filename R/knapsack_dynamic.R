@@ -1,3 +1,20 @@
+#' knapsack_dynamic
+#'
+#' Solver for the knapsack problem based on dynamic programming.
+#'
+#' @param x Dataframe containing weight and value of objects
+#' @param W maximum weight allowed in knapsack
+#'
+#' @return List with the optimal value and the respective elements,
+#' that are included in the solution.
+#'
+#' @examples
+#' knapsack_objects <- get_knapsack_objects(2000)
+#'
+#' knapsack_dynamic(x = knapsack_objects[1:8, ], W = 3500)
+#'
+#' @export
+
 knapsack_dynamic <- function(x, W) {
 
   get_index <- function(i, j) {
