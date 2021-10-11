@@ -10,6 +10,8 @@
 #' @examples
 #' get_knapsack_objects(2000)
 #'
+#' @importFrom stats runif
+#'
 #' @export
 
 get_knapsack_objects <- function(n) {

@@ -21,6 +21,7 @@ brute_force_knapsack <- function(x, W) {
   stopifnot("Dataframe has more/less than two variables." = (length(x) == 2))
   stopifnot("Wrong variables in dataframae" = setequal(colnames(x), c("w", "v")))
   stopifnot("W is not a number." = is.numeric(W))
+  stopifnot("W negative." = W >= 0)
 
   item_number <- nrow(x)
   highest_value <- 0
@@ -32,6 +33,7 @@ brute_force_knapsack <- function(x, W) {
 
     if (weight < W) {
       value <- t(combi_vec) %*% x$v
+      value <- value[1,1]
       if (value > highest_value) {
         highest_value <- value
         combination <- which(combi_vec)

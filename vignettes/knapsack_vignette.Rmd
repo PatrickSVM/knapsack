@@ -1,0 +1,149 @@
+---
+title: "Knapsack Package"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Knapsack Package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+  #eval = FALSE
+)
+```
+<br>
+
+## Package description
+The package "knapsack" is based on laboratory 6 of the course "Advanced R programming" at LiU. It implements 3 different algorithms to solve or at least approximate the optimal solution for the famous knapsack optimization problem: 
+
+|   Algorithm    |  Description  |   Complexity   |  
+|:---------------|:--------------|---------------:|
+|  Brute Force       |  Tries out all $2^n$ possible item-combinations  |  $O(2^n)$    |  
+|  Dynamic Programming   |  Uses dynamic programming for solving the problem  |  $O(Wn)$      |  
+|  Greedy Heuristic    |  Heuristic approach to find a good approximation of the optimal solution |  $O(n\ log(n))$     |  
+
+In the following paragraphs, we demonstrate the proper usage of the packages functions and also analyse the time complexity of the different algorithms.
+
+<br>
+
+## Brute Force Algorithm
+
+The following code shows two examples of the brute force algorithm.
+
+```{r brute}
+library(knapsack)
+
+
+# we create a dataframe with 2000 possible knapsack items 
+knapsack_objects <- get_knapsack_objects(2000)
+
+
+# Example 1:
+
+# now the brute force algorithm is used to solve for the first 8 items with a 
+# maximum weight W of 3500
+
+brute_force_knapsack(x = knapsack_objects[1:8, ], W = 3500)
+
+
+# Example 2:
+
+# now the brute force algorithm is used to solve for the first 12 items with a 
+# maximum weight W of 2000
+
+brute_force_knapsack(x = knapsack_objects[1:12,], W = 2000)
+
+```
+
+#### Computation time - Brute Force
+```{r}
+# number of items = 16, W = 3500
+time <- system.time(brute_force_knapsack(x = knapsack_objects[1:16, ], W = 3500))
+time
+```
+
+```{r, echo=FALSE}
+cat(sprintf(" Computation time for Brute Force (16 items): %#.4f seconds\n\n", time[3]), 
+    sprintf("Computation time for Brute Force (18 items): %#.4f seconds\n\n",  system.time(brute_force_knapsack(x = knapsack_objects[1:18, ], W = 3500))[3]),
+    sprintf("Computation time for Brute Force (20 items): %#.4f seconds\n\n", system.time(brute_force_knapsack(x = knapsack_objects[1:20, ], W = 3500))[3]))
+```
+
+<br>
+
+## Dynamic Programming
+
+The following code shows the same two examples as before but uses the dynamic programming algorithm.
+
+```{r dynamic}
+# Example 1:
+
+# now the dynamic programming algorithm is used to solve for the first 8 items with a 
+# maximum weight W of 3500
+
+knapsack_dynamic(x = knapsack_objects[1:8, ], W = 3500)
+
+
+# Example 2:
+
+# now the dynamic programming algorithm is used to solve for the first 12 items with a 
+# maximum weight W of 2000
+
+knapsack_dynamic(x = knapsack_objects[1:12,], W = 2000)
+
+```
+
+#### Computation time - Dynamic Programming
+```{r}
+# number of items = 125, W = 3500
+time <- system.time(knapsack_dynamic(x = knapsack_objects[1:125, ], W = 3500))
+time
+```
+
+```{r, echo=FALSE}
+cat(sprintf(" Computation time for Dynamic Programming (125 items): %#.4f seconds\n\n", time[3]), 
+    sprintf("Computation time for Dynamic Programming (250 items): %#.4f seconds\n\n",  system.time(knapsack_dynamic(x = knapsack_objects[1:250, ], W = 3500))[3]),
+    sprintf("Computation time for Dynamic Programming (500 items): %#.4f seconds\n\n", system.time(knapsack_dynamic(x = knapsack_objects[1:500, ], W = 3500))[3]))
+```
+
+<br>
+
+## Greedy Heuristic
+
+The following code shows two examples for the usage of the greedy heuristic, with a higher amount of items. 
+
+```{r greedy}
+# Example 1:
+
+# now the greedy heuristic is used to solve for the first 800 items with a 
+# maximum weight W of 3500
+
+greedy_knapsack(x = knapsack_objects[1:800,], W = 3500)
+
+
+# Example 2:
+
+# now the greedy heuristic is used to solve for the first 1200 items with a 
+# maximum weight W of 2000
+
+greedy_knapsack(x = knapsack_objects[1:1200,], W = 2000)
+
+```
+
+#### Computation time - Greedy Heuristic
+```{r}
+# we create a dataframe with 1,000,000 possible knapsack items 
+knapsack_objects <- get_knapsack_objects(1000000)
+
+# number of items = 10000, W = 3500
+time <- system.time(greedy_knapsack(x = knapsack_objects[1:10000, ], W = 3500))
+time
+```
+
+```{r, echo=FALSE}
+cat(sprintf(" Computation time for Greedy Heuristic (10,000 items): %#.4f seconds\n\n", time[3]), 
+    sprintf("Computation time for Greedy Heuristic (100,000 items): %#.4f seconds\n\n",  system.time(greedy_knapsack(x = knapsack_objects[1:100000, ], W = 3500))[3]),
+    sprintf("Computation time for Greedy Heuristic (1,000,000 items): %#.4f seconds\n\n", system.time(greedy_knapsack(x = knapsack_objects, W = 3500))[3]))
+```

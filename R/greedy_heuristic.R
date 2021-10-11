@@ -18,6 +18,12 @@
 
 greedy_knapsack <- function(x, W) {
 
+  stopifnot("x is not a dataframe" = is.data.frame(x))
+  stopifnot("Dataframe has more/less than two variables." = (length(x) == 2))
+  stopifnot("Wrong variables in dataframae" = setequal(colnames(x), c("w", "v")))
+  stopifnot("W is not a number." = is.numeric(W))
+  stopifnot("W negative." = W >= 0)
+
   ordered_df <- x %>% mutate(ratio = .data$v/.data$w)
   ordered_df <- ordered_df[order(ordered_df$ratio, decreasing = TRUE), ]
   current_weight <- 0
