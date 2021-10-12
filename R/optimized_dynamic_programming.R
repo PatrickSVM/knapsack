@@ -60,5 +60,3 @@ optimized_dynamic_programming <- function(x, W) {
 
 
 
-
-
