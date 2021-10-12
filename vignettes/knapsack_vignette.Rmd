@@ -27,7 +27,7 @@ The package "knapsack" is based on laboratory 6 of the course "Advanced R progra
 |  Dynamic Programming   |  Uses dynamic programming for solving the problem  |  $O(Wn)$      |  
 |  Greedy Heuristic    |  Heuristic approach to find a good approximation of the optimal solution |  $O(n\ log(n))$     |  
 
-In the following paragraphs, we demonstrate the proper usage of the packages functions and also analyse the time complexity of the different algorithms.
+In the following paragraphs, we demonstrate the proper usage of the packages functions and also analyze the time complexity of the different algorithms.
 
 <br>
 
@@ -177,7 +177,7 @@ cat(sprintf(" Computation time for Normal Brute Force Algorithm (20 items): %#.4
 ```
 
 
-### Optimized Brute Force Algorithm
+### Optimized Dynamic Programming Algorithm
 
 Profiling showed, that the  operation  "*$*" takes a lot of time. In the for loop we use it twice to refer to the same value in the dataframe, that is why we can simply store it in a variable, to reduce the number of times the operation is used:
 
@@ -192,6 +192,32 @@ print(time_2)
 
 ```{r, echo=FALSE}
 cat(sprintf(" Computation time for Normal Dynamic Programming Algorithm (1500 items): %#.4f seconds\n\n", time_1[3]), 
-    sprintf("Computation time for Optimized Brute Force Algorithm (1500 items): %#.4f seconds\n\n",  time_2[3]),
+    sprintf("Computation time for Optimized Dynamic Programming Algorithm (1500 items): %#.4f seconds\n\n",  time_2[3]),
     sprintf("Improvement in computational time: %#.4f seconds\n\n", time_1[3]-time_2[3]))
 ```
+
+
+### Parallelization of Brute Force Algorithm
+
+To analyze the impact of parallelization on computation time, we integrated an optional parallelized solving approach to the Brute Force Algorithm that uses the *mcapply* function. By default, *brute_force_knapsack* still uses non-parallelized processes, but by setting setting the argument *parallel* to `r TRUE`, the parallelized approach is used.
+
+The following code contains two examples, which show the time efficiency gain due to parallelization:
+
+```{r parallel}
+# NORMAL, number of items = 18, W = 3500
+system.time(brute_force_knapsack(x = knapsack_objects[1:18, ], W = 3500, parallel = FALSE))
+
+
+# PARALLEL, number of items = 18, W = 3500
+system.time(brute_force_knapsack(x = knapsack_objects[1:18, ], W = 3500, parallel = TRUE))
+```
+
+```{r}
+# NORMAL, number of items = 23 W = 30000
+system.time(brute_force_knapsack(x = knapsack_objects[1:23, ], W = 30000, parallel = FALSE))
+
+
+# PARALLEL, number of items = 23, W = 30000
+system.time(brute_force_knapsack(x = knapsack_objects[1:23, ], W = 30000, parallel = TRUE))
+```
+

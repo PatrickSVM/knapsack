@@ -4,12 +4,14 @@
 \alias{brute_force_knapsack}
 \title{brute_force_knapsack}
 \usage{
-brute_force_knapsack(x, W)
+brute_force_knapsack(x, W, parallel = FALSE)
 }
 \arguments{
 \item{x}{Dataframe containing weight and value of objects}
 
 \item{W}{maximum weight allowed in knapsack}
+
+\item{parallel}{boolean value whether to use parallelization}
 }
 \value{
 List with the optimal value and the respective elements,
