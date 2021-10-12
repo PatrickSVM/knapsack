@@ -1,4 +1,4 @@
-#' greedy_heuristic
+#' greedy_knapsack
 #'
 #' Solver for the knapsack problem based on the greedy heuristic.
 #'
@@ -12,34 +12,40 @@
 #' knapsack_objects <- get_knapsack_objects(2000)
 #'
 #' greedy_knapsack(x = knapsack_objects[1:800,], W = 3500)
-#' @import dplyr
 #'
 #' @export
 
 greedy_knapsack <- function(x, W) {
 
-  stopifnot("x is not a dataframe" = is.data.frame(x))
-  stopifnot("Dataframe has more/less than two variables." = (length(x) == 2))
-  stopifnot("Wrong variables in dataframae" = setequal(colnames(x), c("w", "v")))
-  stopifnot("W is not a number." = is.numeric(W))
-  stopifnot("W negative." = W >= 0)
+  stopifnot("x must be a data frame with variables v and w" = is.data.frame(x) & all(names(x) %in% c("v", "w")))
 
-  ordered_df <- x %>% mutate(ratio = .data$v/.data$w)
-  ordered_df <- ordered_df[order(ordered_df$ratio, decreasing = TRUE), ]
-  current_weight <- 0
-  result_val <- 0
-  result_index <- c()
+  stopifnot("weights, values and capacity must be positive" = all(is.numeric(x$w), is.numeric(x$v), is.numeric(W), length(which(x$w < 0)) == 0, length(which(x$v < 0)) == 0), is.null(dim(W)), W > 0, W %% 1 == 0)
 
-  for (item in 1:nrow(x)) {
-    if (current_weight + ordered_df[item, ]$w <= W) {
-      current_weight <- current_weight + ordered_df[item, ]$w
-      result_val <- result_val + ordered_df[item, ]$v
-      result_index <- c(result_index, as.numeric(rownames(ordered_df)[[item]]))
-    }
+  for(i in x$w) {
+    if(i %% 1 != 0)
+      stop("weights must be positive integers")
   }
 
-  res_list = list("value" = round(result_val), "elements" = result_index)
-  return(res_list)
+  x <- x[x$w <= W,]
+
+  x <- x[order(x$v/x$w, decreasing = TRUE),]
+
+  weight <- 0
+
+  i <- 1
+
+  while(weight <= W) {
+
+    weight <- weight + x$w[i]
+    i <- i+1
+
+  }
+
+  i <- i-2
+
+  value <- round(sum(x$v[1:i]))
+
+  elements <- as.integer(rownames(x[1:i,]))
+
+  return(list(value = value, elements = elements))
 }
-
-

@@ -2,7 +2,7 @@
 % Please edit documentation in R/greedy_heuristic.R
 \name{greedy_knapsack}
 \alias{greedy_knapsack}
-\title{greedy_heuristic}
+\title{greedy_knapsack}
 \usage{
 greedy_knapsack(x, W)
 }
@@ -22,4 +22,5 @@ Solver for the knapsack problem based on the greedy heuristic.
 knapsack_objects <- get_knapsack_objects(2000)
 
 greedy_knapsack(x = knapsack_objects[1:800,], W = 3500)
+
 }
